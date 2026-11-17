@@ -6,6 +6,7 @@
   --border: #dde3ec;
   --accent: #13294b;
   --accent-contrast: #ffffff;
+  --highlight: #13294b;
   --radius: 10px;
   --max-width: 960px;
 }
@@ -19,6 +20,7 @@
     --border: #1f3557;
     --accent: #ffffff;
     --accent-contrast: #0b1a33;
+    --highlight: #a9c7f0;
   }
 }
 
@@ -110,7 +112,7 @@ a {
   margin: 8px 0 0;
   font-size: 1.25rem;
   font-weight: 600;
-  color: var(--accent);
+  color: var(--highlight);
 }
 
 .hero-lede {
