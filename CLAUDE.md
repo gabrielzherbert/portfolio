@@ -5,7 +5,7 @@ Personal portfolio for an industrial engineer working in mining exploration and 
 
 ## Tech
 - Plain HTML and CSS only, no frameworks or build tools
-- Keep everything in index.html and style.css unless asked otherwise
+- Keep everything in index.html and styles.css unless asked otherwise
 - Mobile friendly
 
 ## Writing style
