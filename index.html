@@ -4,13 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gabi Herbert | Industrial Engineer</title>
-  <meta name="description" content="Portfolio of Gabi Herbert, Industrial Engineer.">
+  <meta name="description" content="Portfolio of Gabi Herbert, industrial engineer working in mining exploration and analysis.">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
   <header class="site-header on-dark">
-    <nav class="nav container">
-      <a class="nav-brand" href="#top">GH</a>
+    <nav class="nav container" aria-label="Main">
+      <a class="nav-brand" href="#top" aria-label="Back to top">
+        <span class="nav-brand-mark">GH</span>
+      </a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
         <li><a href="#journey">Journey</a></li>
@@ -21,29 +26,94 @@
   </header>
 
   <main id="top">
-    <section class="hero container">
-      <h1>Gabi Herbert</h1>
-      <p class="hero-title">Industrial Engineer</p>
-      <p class="hero-lede">Making systems, processes and operations run leaner, safer and smarter.</p>
-      <a class="button" href="#contact">Get in touch</a>
+    <section class="hero on-dark">
+      <canvas class="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero-inner container">
+        <p class="eyebrow hero-eyebrow">Industrial engineering &middot; Mining exploration &middot; Analysis</p>
+        <h1>Gabi Herbert</h1>
+        <p class="hero-title">Industrial Engineer</p>
+        <p class="hero-lede">
+          Making systems, processes and operations run
+          <span class="hero-rotator" aria-hidden="true"><span class="hero-word">leaner</span></span><span class="sr-only">leaner, safer and smarter</span>.
+        </p>
+        <div class="hero-actions">
+          <a class="button" href="#journey">See my journey</a>
+          <a class="button button--ghost" href="#contact">Get in touch</a>
+        </div>
+      </div>
+      <a class="scroll-cue" href="#about" aria-label="Scroll to About"><span></span></a>
     </section>
 
     <section id="about" class="section container">
+      <p class="eyebrow">01 &middot; About</p>
       <h2>About</h2>
-      <p>
-        I'm an industrial engineer focused on process improvement, operations analysis and
-        data-driven decision making. I enjoy turning messy, real-world workflows into clear,
-        measurable systems, and working with teams to make the improvements stick.
-      </p>
-      <p>
-        Replace this paragraph with a short summary of your background, the industries you've
-        worked in, and what you're looking for next.
-      </p>
+      <div class="about-layout">
+        <div class="reveal">
+          <p>
+            I'm an industrial engineer focused on process improvement, operations analysis and
+            data-driven decision making. I enjoy turning messy, real-world workflows into clear,
+            measurable systems, and working with teams to make the improvements stick.
+          </p>
+          <p>
+            I grew up in Johannesburg and started a Business Science degree in Analytics at the
+            University of Cape Town before moving to Israel. There I served as a combat soldier in
+            the IDF Paratroopers, then completed a BSc in Industrial Engineering and Information
+            Systems at Bar-Ilan University. Today I work remotely as a project officer and analyst for an
+            early-stage gold exploration company in Côte d'Ivoire.
+          </p>
+        </div>
+        <ul class="stats reveal">
+          <li class="stat">
+            <span class="stat-value"><span data-count="90.2" data-decimals="1">90.2</span></span>
+            <span class="stat-label">Degree average, BSc Industrial Engineering</span>
+          </li>
+          <li class="stat">
+            <span class="stat-value"><span data-count="40">40</span>%</span>
+            <span class="stat-label">Less travel distance in an optimised warehouse layout</span>
+          </li>
+          <li class="stat">
+            <span class="stat-value">Top <span data-count="1">1</span>%</span>
+            <span class="stat-label">In Physics, Accounting and Maths at school</span>
+          </li>
+          <li class="stat">
+            <span class="stat-value"><span data-count="3">3</span></span>
+            <span class="stat-label">Countries across my journey</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="toolkit reveal">
+        <h3 class="toolkit-title">Toolkit</h3>
+        <div class="toolkit-groups">
+          <div class="toolkit-group">
+            <p class="toolkit-label">Optimisation</p>
+            <ul class="tags">
+              <li>Constraint Logic Programming</li><li>Slotting optimisation</li>
+              <li>Warehouse layout</li><li>Process improvement</li>
+            </ul>
+          </div>
+          <div class="toolkit-group">
+            <p class="toolkit-label">Analysis</p>
+            <ul class="tags">
+              <li>Data analysis</li><li>Operations analysis</li><li>Market analysis</li>
+            </ul>
+          </div>
+          <div class="toolkit-group">
+            <p class="toolkit-label">Projects</p>
+            <ul class="tags">
+              <li>Project strategy</li><li>Permitting</li><li>Exploration targeting</li>
+              <li>Stakeholder reporting</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
     <section id="journey" class="section section--dark on-dark journey">
       <div class="container">
+      <p class="eyebrow">02 &middot; Journey</p>
       <h2>Journey</h2>
+      <p class="section-intro">Drag the globe, click a point, or scroll the timeline.</p>
       <div class="journey-layout">
         <div class="journey-globe-wrap">
           <div id="journey-globe" class="journey-globe" role="img"
@@ -60,9 +130,11 @@
     </section>
 
     <section id="projects" class="section container">
+      <p class="eyebrow">03 &middot; Projects</p>
       <h2>Projects</h2>
       <div class="cards">
-        <article class="card">
+        <article class="card spotlight reveal">
+          <p class="card-status"><span class="pulse" aria-hidden="true"></span>Current role</p>
           <h3>Gold Exploration: Project Officer and Analyst</h3>
           <p>
             Project officer and analyst at an early-stage gold exploration company. I support
@@ -74,35 +146,73 @@
             <li>Market analysis</li><li>Stakeholder reporting</li>
           </ul>
         </article>
-        <article class="card">
-          <h3>Warehouse SKU Placement Optimisation</h3>
-          <p>
-            University project with Logico to optimise where SKUs are placed in a picking
-            warehouse, reducing picking time and travel distance. Approach: Distance-based optimisation using Minimum Delay Algorithm together with Constraint Logic Programming.
-            Outcome: Achieved 40% reduction in travel distance for the optimised layout.
-          </p>
-          <ul class="tags">
-            <li>Slotting optimisation</li><li>Warehouse layout</li><li>Data analysis</li>
-            <li>[TOOLS]</li>
-          </ul>
+
+        <article class="card card--feature spotlight reveal">
+          <div class="feature-text">
+            <p class="card-status">University project &middot; 2024</p>
+            <h3>Warehouse SKU Placement Optimisation</h3>
+            <p>
+              University project with Logico to optimise where SKUs are placed in a picking
+              warehouse, reducing picking time and travel distance.
+            </p>
+            <dl class="feature-facts">
+              <div><dt>Approach</dt><dd>Distance-based optimisation using a Minimum Delay Algorithm together with Constraint Logic Programming.</dd></div>
+              <div><dt>Outcome</dt><dd>A 40% reduction in travel distance for the optimised layout.</dd></div>
+            </dl>
+            <div class="result-bars" aria-label="Relative travel distance: original layout 100, optimised layout 60">
+              <div class="result-row">
+                <span class="result-name">Original</span>
+                <span class="result-track"><span class="result-fill result-fill--before" style="--w: 100%"></span></span>
+              </div>
+              <div class="result-row">
+                <span class="result-name">Optimised</span>
+                <span class="result-track"><span class="result-fill" style="--w: 60%"></span></span>
+                <span class="result-delta">&minus;40%</span>
+              </div>
+            </div>
+            <ul class="tags">
+              <li>Slotting optimisation</li><li>Warehouse layout</li><li>Data analysis</li>
+              <li>Constraint Logic Programming</li>
+            </ul>
+          </div>
+
+          <figure class="warehouse">
+            <div class="warehouse-toggle" role="group" aria-label="Placement strategy">
+              <button type="button" data-layout="before" aria-pressed="true">Unoptimised</button>
+              <button type="button" data-layout="after" aria-pressed="false">Optimised</button>
+            </div>
+            <svg class="warehouse-svg" viewBox="0 0 330 222" role="img"
+                 aria-label="Illustration of a picker route through warehouse aisles, shorter when popular items sit near dispatch"></svg>
+            <figcaption>
+              Illustration of the idea: fast-moving SKUs (green) placed near dispatch shorten each
+              picking route. Not the real layout or data.
+            </figcaption>
+          </figure>
         </article>
       </div>
     </section>
 
     <section id="contact" class="section container">
-      <h2>Contact</h2>
-      <p>Interested in working together or just want to say hello? Reach out.</p>
-      <ul class="contact-list">
-        <li><a href="mailto:you@example.com">you@example.com</a></li>
-        <li><a href="https://www.linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
-      </ul>
+      <p class="eyebrow">04 &middot; Contact</p>
+      <div class="contact-card on-dark reveal">
+        <div>
+          <h2>Let's talk</h2>
+          <p>Interested in working together or just want to say hello? Reach out on LinkedIn.</p>
+        </div>
+        <ul class="contact-list">
+          <li><a class="button" href="https://www.linkedin.com/in/gzherbert" target="_blank" rel="noopener">Connect on LinkedIn</a></li>
+        </ul>
+      </div>
     </section>
   </main>
 
   <footer class="site-footer on-dark">
     <div class="site-footer-inner container">
       <p>&copy; 2026 Gabi Herbert</p>
-      <a href="https://github.com/gabrielzherbert" target="_blank" rel="noopener">GitHub</a>
+      <div class="footer-links">
+        <a href="https://github.com/gabrielzherbert" target="_blank" rel="noopener">GitHub</a>
+        <a href="#top">Back to top &uarr;</a>
+      </div>
     </div>
   </footer>
 
@@ -409,6 +519,435 @@
       document.addEventListener("keydown", function (e) {
         if (e.key === "Escape" && !panel.hidden) hidePanel();
       });
+    })();
+  </script>
+  <script>
+    // Site interactions: hero drill section, word rotator, reveals, counters, nav, warehouse demo
+    (function () {
+      var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var reduced = function () { return motionQuery.matches; };
+      var rootStyle = getComputedStyle(document.documentElement);
+      function cssVar(name) { return rootStyle.getPropertyValue(name).trim(); }
+
+      // Scroll progress and header state
+      var progress = document.querySelector(".scroll-progress span");
+      var header = document.querySelector(".site-header");
+      var ticking = false;
+      function onScroll() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function () {
+          var max = document.documentElement.scrollHeight - window.innerHeight;
+          progress.style.transform = "scaleX(" + (max > 0 ? window.scrollY / max : 0) + ")";
+          header.classList.toggle("is-scrolled", window.scrollY > 8);
+          ticking = false;
+        });
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      // Active nav link
+      var navLinks = {};
+      document.querySelectorAll(".nav-links a").forEach(function (a) {
+        navLinks[a.getAttribute("href").slice(1)] = a;
+      });
+      if ("IntersectionObserver" in window) {
+        var navObserver = new IntersectionObserver(function (records) {
+          records.forEach(function (r) {
+            var link = navLinks[r.target.id];
+            if (!link) return;
+            if (r.isIntersecting) {
+              Object.keys(navLinks).forEach(function (k) { navLinks[k].removeAttribute("aria-current"); });
+              link.setAttribute("aria-current", "true");
+            } else if (link.getAttribute("aria-current")) {
+              link.removeAttribute("aria-current");
+            }
+          });
+        }, { rootMargin: "-45% 0px -50% 0px" });
+        Object.keys(navLinks).forEach(function (id) {
+          var s = document.getElementById(id);
+          if (s) navObserver.observe(s);
+        });
+      }
+
+      // Reveal on scroll, and count-up stats
+      function countUp(node) {
+        var target = parseFloat(node.dataset.count);
+        var decimals = parseInt(node.dataset.decimals || "0", 10);
+        if (reduced()) { node.textContent = target.toFixed(decimals); return; }
+        var start = null, duration = 1400;
+        function step(ts) {
+          if (start === null) start = ts;
+          var t = Math.min(1, (ts - start) / duration);
+          var eased = 1 - Math.pow(1 - t, 3);
+          node.textContent = (target * eased).toFixed(decimals);
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window) {
+        var revealObserver = new IntersectionObserver(function (records) {
+          records.forEach(function (r) {
+            if (!r.isIntersecting) return;
+            r.target.classList.add("is-visible");
+            r.target.querySelectorAll("[data-count]").forEach(countUp);
+            revealObserver.unobserve(r.target);
+          });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (n) { revealObserver.observe(n); });
+      } else {
+        reveals.forEach(function (n) { n.classList.add("is-visible"); });
+      }
+
+      // Card spotlight follows the pointer
+      document.querySelectorAll(".spotlight").forEach(function (card) {
+        card.addEventListener("pointermove", function (e) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty("--mx", (e.clientX - r.left) + "px");
+          card.style.setProperty("--my", (e.clientY - r.top) + "px");
+        });
+      });
+
+      // Hero word rotator
+      var word = document.querySelector(".hero-word");
+      var words = ["leaner", "safer", "smarter"];
+      var wordIndex = 0;
+      setInterval(function () {
+        if (reduced() || document.hidden) return;
+        word.classList.add("is-out");
+        setTimeout(function () {
+          wordIndex = (wordIndex + 1) % words.length;
+          word.textContent = words[wordIndex];
+          word.classList.remove("is-out");
+        }, 350);
+      }, 2600);
+
+      // Hero: a quiet geological cross-section. Inclined drill holes are drilled in one by one,
+      // the intersected zone is outlined once the holes reach it, and the section then rests.
+      // Elements near the pointer brighten softly. Redraws only while something is changing.
+      (function () {
+        var canvas = document.querySelector(".hero-canvas");
+        var ctx = canvas.getContext("2d");
+        if (!ctx) return;
+        var hero = canvas.parentNode;
+        var C = {
+          strata: cssVar("--section-line"),
+          trace: cssVar("--drill-trace"),
+          lit: cssVar("--drill-lit"),
+          ore: cssVar("--ore-zone"),
+          bit: cssVar("--drill-bit")
+        };
+        var STEP = 4, TICK_EVERY = 32, RADIUS = 170;
+        var HOLE_MS = 2400, STAGGER_MS = 650;
+        var w, h, dpr, fadeC, holes = [], strata = [], surface = [], ore;
+        var glow = { x: 0, y: 0, tx: 0, ty: 0, a: 0, ta: 0 };
+        var startTs = null, drilled = false, animating = false;
+
+        // Fixed pseudo-random so the section looks the same on every visit
+        function rand(i) { var s = Math.sin(i * 127.1 + 311.7) * 43758.5453; return s - Math.floor(s); }
+
+        // Keep the section to the right; fade it out toward the text
+        function fade(x, y) {
+          var d = Math.hypot(x - fadeC.x, y - fadeC.y) / fadeC.r;
+          return Math.max(0, 1 - d * d);
+        }
+        function lightAt(x, y) {
+          if (glow.a < 0.001) return 0;
+          var dx = x - glow.x, dy = y - glow.y;
+          return glow.a * Math.exp(-(dx * dx + dy * dy) / (RADIUS * RADIUS));
+        }
+        function surfaceY(x) {
+          return h * 0.16 + Math.sin((x / w) * Math.PI * 1.4) * h * 0.012 + Math.sin(x * 0.013) * 3;
+        }
+        function inOre(x, y) {
+          var dx = x - ore.x, dy = y - ore.y;
+          var u = dx * ore.cos + dy * ore.sin, v = -dx * ore.sin + dy * ore.cos;
+          return (u * u) / (ore.rx * ore.rx) + (v * v) / (ore.ry * ore.ry) <= 1;
+        }
+
+        function build() {
+          var narrow = w < 700;
+          fadeC = { x: w * (narrow ? 0.6 : 0.72), y: h * 0.5, r: Math.max(w, h) * (narrow ? 0.7 : 0.78) };
+
+          surface = [];
+          for (var x = 0; x <= w + STEP; x += STEP * 2) surface.push({ x: x, y: surfaceY(x) });
+
+          // Gently dipping layers below the surface
+          strata = [];
+          for (var k = 1; k <= 5; k++) {
+            var line = [];
+            for (var sx = 0; sx <= w + STEP; sx += STEP * 2) {
+              line.push({ x: sx, y: surfaceY(sx) + k * h * 0.14 + (sx / w) * h * 0.05 + Math.sin(sx * 0.005 + k * 1.7) * 7 });
+            }
+            strata.push(line);
+          }
+
+          // A lens-shaped zone dipping against the holes, so they cut across it
+          var a = -0.42;
+          ore = {
+            x: w * (narrow ? 0.62 : 0.74), y: h * (narrow ? 0.7 : 0.6),
+            rx: w * (narrow ? 0.34 : 0.2), ry: h * 0.045,
+            angle: a, cos: Math.cos(a), sin: Math.sin(a)
+          };
+
+          // Parallel fence of inclined holes, flattening slightly with depth
+          holes = [];
+          var n = narrow ? 4 : 6;
+          var x0 = w * (narrow ? 0.22 : 0.5), x1 = w * 0.88;
+          for (var i = 0; i < n; i++) {
+            var cx = x0 + (x1 - x0) * (i / (n - 1)) + (rand(i) - 0.5) * 18;
+            var cy = surfaceY(cx);
+            var len = h * (0.58 + rand(i + 20) * 0.22);
+            var pts = [{ x: cx, y: cy, ore: false }];
+            var px = cx, py = cy, dist = 0;
+            while (dist < len) {
+              var t = dist / len;
+              var dip = (64 - 9 * t + (rand(i + 40) - 0.5) * 4) * Math.PI / 180;
+              px += Math.cos(dip) * STEP; py += Math.sin(dip) * STEP;
+              dist += STEP;
+              if (py > h) break;
+              pts.push({ x: px, y: py, ore: inOre(px, py) });
+            }
+            holes.push({ pts: pts, order: i });
+          }
+        }
+
+        function resize() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          w = hero.clientWidth; h = hero.clientHeight;
+          canvas.width = w * dpr; canvas.height = h * dpr;
+          canvas.style.width = w + "px"; canvas.style.height = h + "px";
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          build();
+          draw(drilled ? Infinity : elapsed());
+        }
+
+        function elapsed() { return startTs === null ? 0 : performance.now() - startTs; }
+        function holeProgress(i, ms) {
+          var t = Math.max(0, Math.min(1, (ms - i * STAGGER_MS) / HOLE_MS));
+          return 1 - Math.pow(1 - t, 2);
+        }
+
+        // Stroke a polyline segment by segment so each piece carries its own fade and glow
+        function strokeLine(pts, color, baseAlpha, dash) {
+          ctx.setLineDash(dash || []);
+          ctx.lineWidth = 1;
+          for (var i = 1; i < pts.length; i++) {
+            var p = pts[i - 1], q = pts[i];
+            var f = fade(q.x, q.y);
+            var l = lightAt(q.x, q.y);
+            var al = Math.min(1, f * baseAlpha + l * 0.6);
+            if (al < 0.01) continue;
+            ctx.globalAlpha = al;
+            ctx.strokeStyle = color;
+            ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+          }
+          ctx.setLineDash([]);
+        }
+
+        function draw(ms) {
+          ctx.clearRect(0, 0, w, h);
+
+          strata.forEach(function (line) { strokeLine(line, C.strata, 1, [2, 6]); });
+          strokeLine(surface, C.strata, 1.6);
+
+          // Interpreted zone appears as the holes reach it
+          var total = 0;
+          holes.forEach(function (hole, i) { total += holeProgress(i, ms); });
+          var oreA = Math.max(0, Math.min(1, (total / holes.length - 0.45) / 0.55));
+          if (oreA > 0) {
+            var of = fade(ore.x, ore.y) + lightAt(ore.x, ore.y) * 0.5;
+            ctx.save();
+            ctx.translate(ore.x, ore.y); ctx.rotate(ore.angle);
+            ctx.beginPath(); ctx.ellipse(0, 0, ore.rx, ore.ry, 0, 0, Math.PI * 2);
+            ctx.globalAlpha = Math.min(1, oreA * of);
+            ctx.fillStyle = C.ore; ctx.fill();
+            ctx.setLineDash([3, 5]); ctx.lineWidth = 1; ctx.strokeStyle = C.trace;
+            ctx.globalAlpha = Math.min(1, oreA * of * 0.6); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.restore();
+          }
+
+          holes.forEach(function (hole, i) {
+            var pts = hole.pts;
+            var upto = Math.floor(holeProgress(i, ms) * (pts.length - 1));
+            if (upto < 1) return;
+            var c = pts[0], cf = fade(c.x, c.y) + lightAt(c.x, c.y);
+
+            // Collar pad on the surface
+            ctx.globalAlpha = Math.min(1, cf);
+            ctx.strokeStyle = C.trace; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(c.x - 6, c.y - 1); ctx.lineTo(c.x + 6, c.y - 1); ctx.stroke();
+
+            for (var j = 1; j <= upto; j++) {
+              var p = pts[j - 1], q = pts[j];
+              var l = lightAt(q.x, q.y);
+              var f = fade(q.x, q.y);
+              ctx.globalAlpha = Math.min(1, q.ore ? f * 1.2 + l : f * 0.85 + l * 0.7);
+              if (ctx.globalAlpha < 0.01) continue;
+              ctx.strokeStyle = q.ore || l > 0.35 ? C.lit : C.trace;
+              ctx.lineWidth = q.ore ? 2.5 : 1;
+              ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+
+              // Downhole interval ticks
+              if ((j * STEP) % TICK_EVERY === 0) {
+                var dx = q.x - p.x, dy = q.y - p.y, m = Math.hypot(dx, dy) || 1;
+                var nx = -dy / m * 3, ny = dx / m * 3;
+                ctx.lineWidth = 1;
+                ctx.globalAlpha *= 0.7;
+                ctx.beginPath(); ctx.moveTo(q.x - nx, q.y - ny); ctx.lineTo(q.x + nx, q.y + ny); ctx.stroke();
+              }
+            }
+
+            // Drill bit while the hole is advancing
+            if (upto < pts.length - 1) {
+              var tip = pts[upto];
+              ctx.globalAlpha = Math.min(1, fade(tip.x, tip.y) * 1.4 + 0.15);
+              ctx.fillStyle = C.bit;
+              ctx.beginPath(); ctx.arc(tip.x, tip.y, 1.8, 0, Math.PI * 2); ctx.fill();
+            }
+          });
+          ctx.globalAlpha = 1;
+        }
+
+        function step() {
+          var k = 0.12;
+          glow.x += (glow.tx - glow.x) * k;
+          glow.y += (glow.ty - glow.y) * k;
+          glow.a += (glow.ta - glow.a) * k;
+          var ms = elapsed();
+          if (!drilled && ms > (holes.length - 1) * STAGGER_MS + HOLE_MS) drilled = true;
+          draw(drilled ? Infinity : ms);
+          var settled = drilled &&
+            Math.abs(glow.tx - glow.x) < 0.5 && Math.abs(glow.ty - glow.y) < 0.5 &&
+            Math.abs(glow.ta - glow.a) < 0.005;
+          if (settled) { animating = false; return; }
+          requestAnimationFrame(step);
+        }
+        function kick() {
+          if (reduced()) {
+            drilled = true;
+            glow.x = glow.tx; glow.y = glow.ty; glow.a = glow.ta;
+            draw(Infinity); return;
+          }
+          if (!animating) { animating = true; requestAnimationFrame(step); }
+        }
+
+        hero.addEventListener("pointermove", function (e) {
+          if (e.pointerType === "touch") return;
+          var r = hero.getBoundingClientRect();
+          glow.tx = e.clientX - r.left; glow.ty = e.clientY - r.top;
+          if (glow.a < 0.01) { glow.x = glow.tx; glow.y = glow.ty; }
+          glow.ta = 1;
+          kick();
+        });
+        hero.addEventListener("pointerleave", function () { glow.ta = 0; kick(); });
+
+        resize();
+        if ("ResizeObserver" in window) new ResizeObserver(resize).observe(hero);
+        startTs = performance.now() + 500;
+        kick();
+      })();
+
+      // Warehouse illustration: picker route with unoptimised vs optimised SKU placement
+      (function () {
+        var svg = document.querySelector(".warehouse-svg");
+        if (!svg) return;
+        var NS = "http://www.w3.org/2000/svg";
+        var RACKS = 6, SLOTS = 6;
+        var RACK_X0 = 34, RACK_STEP = 47, RACK_W = 16;
+        var SLOT_Y0 = 14, SLOT_H = 25, FRONT_Y = 184;
+        var DEPOT = { x: 14, y: FRONT_Y };
+        var LAYOUTS = {
+          before: [[5, 0], [1, 1], [3, 2], [4, 4], [0, 3], [2, 0]],
+          after: [[0, 5], [0, 4], [1, 5], [1, 4], [0, 3], [1, 3]]
+        };
+
+        function make(tag, attrs, parent) {
+          var n = document.createElementNS(NS, tag);
+          Object.keys(attrs).forEach(function (k) { n.setAttribute(k, attrs[k]); });
+          (parent || svg).appendChild(n);
+          return n;
+        }
+        function aisleX(r) { return RACK_X0 + r * RACK_STEP + RACK_W + (RACK_STEP - RACK_W) / 2; }
+        function slotY(s) { return SLOT_Y0 + s * SLOT_H + SLOT_H / 2; }
+
+        make("line", { x1: 4, y1: FRONT_Y, x2: 326, y2: FRONT_Y, class: "wh-aisle" });
+        var slotEls = {};
+        for (var r = 0; r < RACKS; r++) {
+          for (var s = 0; s < SLOTS; s++) {
+            slotEls[r + "-" + s] = make("rect", {
+              x: RACK_X0 + r * RACK_STEP, y: SLOT_Y0 + s * SLOT_H + 2,
+              width: RACK_W, height: SLOT_H - 4, rx: 2, class: "wh-slot"
+            });
+          }
+        }
+        make("rect", { x: 2, y: FRONT_Y + 10, width: 54, height: 22, rx: 4, class: "wh-depot" });
+        var depotText = make("text", { x: 29, y: FRONT_Y + 25, class: "wh-depot-text", "text-anchor": "middle" });
+        depotText.textContent = "Dispatch";
+        var route = make("path", { class: "wh-route", fill: "none" });
+        var picker = make("circle", { r: 5, class: "wh-picker", cx: DEPOT.x, cy: DEPOT.y });
+
+        // Return routing: walk the front aisle, go up each aisle to its furthest pick, come back
+        function routePath(picks) {
+          var byAisle = {};
+          picks.forEach(function (p) {
+            var y = slotY(p[1]);
+            byAisle[p[0]] = Math.min(byAisle[p[0]] === undefined ? Infinity : byAisle[p[0]], y);
+          });
+          var d = "M" + DEPOT.x + " " + DEPOT.y;
+          Object.keys(byAisle).map(Number).sort(function (a, b) { return a - b; }).forEach(function (a) {
+            var x = aisleX(a);
+            d += " L" + x + " " + FRONT_Y + " L" + x + " " + byAisle[a] + " L" + x + " " + FRONT_Y;
+          });
+          return d + " L" + DEPOT.x + " " + DEPOT.y;
+        }
+
+        var animId = null;
+        function show(name) {
+          var picks = LAYOUTS[name];
+          Object.keys(slotEls).forEach(function (k) { slotEls[k].classList.remove("is-pick"); });
+          picks.forEach(function (p) { slotEls[p[0] + "-" + p[1]].classList.add("is-pick"); });
+          route.setAttribute("d", routePath(picks));
+          var len = route.getTotalLength();
+          cancelAnimationFrame(animId);
+          if (reduced()) {
+            route.style.strokeDasharray = "none";
+            picker.setAttribute("cx", DEPOT.x); picker.setAttribute("cy", DEPOT.y);
+            return;
+          }
+          route.style.strokeDasharray = len;
+          var duration = len * 6, start = null;
+          function step(ts) {
+            if (start === null) start = ts;
+            var t = Math.min(1, (ts - start) / duration);
+            route.style.strokeDashoffset = len * (1 - t);
+            var pt = route.getPointAtLength(len * t);
+            picker.setAttribute("cx", pt.x); picker.setAttribute("cy", pt.y);
+            if (t < 1) animId = requestAnimationFrame(step);
+          }
+          animId = requestAnimationFrame(step);
+        }
+
+        var buttons = document.querySelectorAll(".warehouse-toggle button");
+        buttons.forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b === btn)); });
+            show(btn.dataset.layout);
+          });
+        });
+
+        // Start the first run when the figure scrolls into view
+        if ("IntersectionObserver" in window) {
+          var started = false;
+          new IntersectionObserver(function (rec, obs) {
+            if (rec[0].isIntersecting && !started) { started = true; show("before"); obs.disconnect(); }
+          }, { threshold: 0.4 }).observe(svg);
+        } else {
+          show("before");
+        }
+      })();
     })();
   </script>
 </body>
