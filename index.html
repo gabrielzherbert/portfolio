@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Gabi Herbert — Industrial Engineer</title>
+  <title>Gabi Herbert | Industrial Engineer</title>
   <meta name="description" content="Portfolio of Gabi Herbert, Industrial Engineer.">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -13,6 +13,7 @@
       <a class="nav-brand" href="#top">GH</a>
       <ul class="nav-links">
         <li><a href="#about">About</a></li>
+        <li><a href="#journey">Journey</a></li>
         <li><a href="#projects">Projects</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
@@ -32,12 +33,28 @@
       <p>
         I'm an industrial engineer focused on process improvement, operations analysis and
         data-driven decision making. I enjoy turning messy, real-world workflows into clear,
-        measurable systems — and working with teams to make the improvements stick.
+        measurable systems, and working with teams to make the improvements stick.
       </p>
       <p>
         Replace this paragraph with a short summary of your background, the industries you've
         worked in, and what you're looking for next.
       </p>
+    </section>
+
+    <section id="journey" class="section container journey">
+      <h2>Journey</h2>
+      <div class="journey-layout">
+        <div class="journey-globe-wrap">
+          <div id="journey-globe" class="journey-globe" role="img"
+               aria-label="Globe showing a route from Johannesburg to Cape Town to Israel, then to Côte d'Ivoire"></div>
+          <div id="journey-panel" class="journey-panel" hidden>
+            <button type="button" class="journey-panel-close" aria-label="Close">&times;</button>
+            <h3 class="journey-panel-title"></h3>
+            <ul class="journey-panel-list"></ul>
+          </div>
+        </div>
+        <ol id="journey-timeline" class="timeline"></ol>
+      </div>
     </section>
 
     <section id="projects" class="section container">
@@ -84,5 +101,292 @@
     <p>&copy; 2026 Gabi Herbert</p>
     <a href="https://github.com/gabrielzherbert" target="_blank" rel="noopener">GitHub</a>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.1/dist/globe.gl.min.js"></script>
+  <script src="data.js"></script>
+  <script>
+    (function () {
+      if (typeof JOURNEY === "undefined") return;
+
+      var COUNTRIES_URL =
+        "https://cdn.jsdelivr.net/gh/vasturiano/globe.gl@v2.46.1/example/datasets/ne_110m_admin_0_countries.geojson";
+      var NAVY = "#13294b";
+      var LIGHT = "#a9c7f0";
+      var VIEW_ALTITUDE = 1.9;
+      var RESUME_DELAY = 5000;
+
+      var section = document.getElementById("journey");
+      var globeEl = document.getElementById("journey-globe");
+      var timeline = document.getElementById("journey-timeline");
+      var panel = document.getElementById("journey-panel");
+      var panelTitle = panel.querySelector(".journey-panel-title");
+      var panelList = panel.querySelector(".journey-panel-list");
+
+      var motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var reduced = motionQuery.matches;
+
+      var places = {};
+      JOURNEY.places.forEach(function (p) { places[p.id] = p; });
+
+      var activePlace = null;
+      var labelEls = {};
+      var globe = null;
+      var resumeTimer = null;
+      var scrollLockUntil = 0;
+
+      function el(tag, className, text) {
+        var node = document.createElement(tag);
+        if (className) node.className = className;
+        if (text) node.textContent = text;
+        return node;
+      }
+
+      // Timeline
+      var items = JOURNEY.entries.map(function (entry, i) {
+        var place = places[entry.place];
+        var li = el("li", "timeline-item");
+        li.dataset.place = entry.place;
+        li.appendChild(el("p", "timeline-dates", entry.dates));
+        var h3 = el("h3", "timeline-title");
+        var btn = el("button", "timeline-button", entry.title);
+        btn.type = "button";
+        h3.appendChild(btn);
+        li.appendChild(h3);
+        if (entry.subtitle) li.appendChild(el("p", "timeline-subtitle", entry.subtitle));
+        if (place) li.appendChild(el("p", "timeline-place", place.name));
+        if (entry.details && entry.details.length) {
+          var ul = el("ul", "timeline-details");
+          entry.details.forEach(function (d) { ul.appendChild(el("li", "", d)); });
+          li.appendChild(ul);
+        }
+        li.addEventListener("click", function () {
+          activate(entry.place, li);
+          pauseRotate();
+        });
+        timeline.appendChild(li);
+        return li;
+      });
+
+      function highlightItems(placeId, current) {
+        items.forEach(function (li) {
+          li.classList.toggle("is-place", li.dataset.place === placeId);
+          li.classList.toggle("is-active", li === current);
+        });
+      }
+
+      function activate(placeId, item) {
+        highlightItems(placeId, item);
+        if (placeId === activePlace) return;
+        activePlace = placeId;
+        if (!globe) return;
+        var p = places[placeId];
+        globe.pointOfView({ lat: p.lat, lng: p.lng, altitude: VIEW_ALTITUDE }, reduced ? 0 : 1200);
+        refreshLayers();
+      }
+
+      // Scroll sync: the entry crossing a band near the middle of the viewport is active
+      if ("IntersectionObserver" in window) {
+        var scrollObserver = new IntersectionObserver(function (records) {
+          if (Date.now() < scrollLockUntil) return;
+          records.forEach(function (r) {
+            if (r.isIntersecting) activate(r.target.dataset.place, r.target);
+          });
+        }, { rootMargin: "-50% 0px -40% 0px" });
+        items.forEach(function (li) { scrollObserver.observe(li); });
+      }
+
+      // Globe
+      function webglAvailable() {
+        try {
+          var c = document.createElement("canvas");
+          return !!(window.WebGLRenderingContext && (c.getContext("webgl") || c.getContext("experimental-webgl")));
+        } catch (e) {
+          return false;
+        }
+      }
+
+      if (typeof Globe === "undefined" || !webglAvailable()) {
+        section.classList.add("journey--no-globe");
+        return;
+      }
+
+      try {
+        globe = new Globe(globeEl, { animateIn: !reduced });
+      } catch (e) {
+        section.classList.add("journey--no-globe");
+        return;
+      }
+
+      globe
+        .backgroundColor("rgba(0,0,0,0)")
+        .showAtmosphere(true)
+        .atmosphereColor(LIGHT)
+        .atmosphereAltitude(0.18)
+        .pointOfView({ lat: 5, lng: 15, altitude: 2.4 }, 0)
+        // Points
+        .pointLat("lat")
+        .pointLng("lng")
+        .pointAltitude(0.01)
+        .pointRadius(function (p) { return p.id === activePlace ? 0.75 : 0.45; })
+        .pointColor(function (p) { return p.id === activePlace ? "#ffffff" : "rgba(255,255,255,0.75)"; })
+        .pointLabel(function (p) { return p.name; })
+        .onPointClick(function (p) { showPanel(p.id); })
+        // Glow rings
+        .ringLat("lat")
+        .ringLng("lng")
+        .ringColor(function () { return function (t) { return "rgba(169,199,240," + (1 - t) + ")"; }; })
+        .ringMaxRadius(function (p) { return p.id === activePlace ? 4 : 2.2; })
+        .ringPropagationSpeed(1.2)
+        .ringRepeatPeriod(1600)
+        // Arcs
+        .arcStartLat(function (a) { return places[a.from].lat; })
+        .arcStartLng(function (a) { return places[a.from].lng; })
+        .arcEndLat(function (a) { return places[a.to].lat; })
+        .arcEndLng(function (a) { return places[a.to].lng; })
+        .arcColor(function (a) {
+          return a.type === "current"
+            ? ["rgba(169,199,240,0.35)", "rgba(169,199,240,0.55)"]
+            : ["rgba(169,199,240,0.95)", "rgba(255,255,255,0.95)"];
+        })
+        .arcStroke(function (a) { return a.type === "current" ? 0.3 : 0.6; })
+        .arcAltitudeAutoScale(0.4)
+        .arcsData(JOURNEY.arcs)
+        // Place labels
+        .htmlLat("lat")
+        .htmlLng("lng")
+        .htmlAltitude(0.01)
+        .htmlElement(function (p) {
+          var wrap = el("div", "globe-label" + (p.labelSide === "left" ? " globe-label--left" : ""));
+          wrap.appendChild(el("span", "globe-label-text", p.label || p.name));
+          labelEls[p.id] = wrap;
+          return wrap;
+        })
+        .htmlElementsData(JOURNEY.places);
+
+      globe.globeMaterial().color.set(NAVY);
+
+      // Fade labels out as their point nears the globe's edge
+      function updateLabelFade() {
+        var pov = globe.pointOfView();
+        var toRad = Math.PI / 180;
+        JOURNEY.places.forEach(function (p) {
+          var node = labelEls[p.id];
+          if (!node) return;
+          var cos = Math.sin(p.lat * toRad) * Math.sin(pov.lat * toRad) +
+            Math.cos(p.lat * toRad) * Math.cos(pov.lat * toRad) * Math.cos((p.lng - pov.lng) * toRad);
+          var angle = Math.acos(Math.max(-1, Math.min(1, cos))) / toRad;
+          node.firstChild.style.opacity = Math.max(0, Math.min(1, (75 - angle) / 20));
+        });
+      }
+
+      function applyMotion() {
+        globe
+          .arcDashLength(function (a) { return reduced ? 1 : a.type === "current" ? 0.15 : 0.4; })
+          .arcDashGap(function (a) { return reduced ? 0 : a.type === "current" ? 0.12 : 0.2; })
+          .arcDashAnimateTime(function (a) { return reduced ? 0 : a.type === "current" ? 6000 : 2500; })
+          .arcsData(JOURNEY.arcs.slice());
+        controls.autoRotate = !reduced;
+        refreshLayers();
+      }
+
+      function refreshLayers() {
+        globe.pointsData(JOURNEY.places.slice());
+        globe.ringsData(reduced ? [] : JOURNEY.places.slice());
+        Object.keys(labelEls).forEach(function (id) {
+          labelEls[id].classList.toggle("is-active", id === activePlace);
+        });
+      }
+
+      // Land as soft hex dots; plain navy sphere if this fails to load
+      fetch(COUNTRIES_URL)
+        .then(function (r) { return r.json(); })
+        .then(function (geo) {
+          globe
+            .hexPolygonsData(geo.features.filter(function (f) { return f.properties.ISO_A2 !== "AQ"; }))
+            .hexPolygonResolution(3)
+            .hexPolygonMargin(0.55)
+            .hexPolygonUseDots(true)
+            .hexPolygonColor(function () { return "rgba(255,255,255,0.5)"; });
+        })
+        .catch(function () {});
+
+      // Controls: slow auto-rotate, paused while the user interacts
+      var controls = globe.controls();
+      controls.enableZoom = false;
+      controls.autoRotateSpeed = 0.35;
+
+      function pauseRotate() {
+        controls.autoRotate = false;
+        clearTimeout(resumeTimer);
+        if (!reduced) {
+          resumeTimer = setTimeout(function () { controls.autoRotate = true; }, RESUME_DELAY);
+        }
+      }
+
+      controls.addEventListener("start", function () {
+        controls.autoRotate = false;
+        clearTimeout(resumeTimer);
+      });
+      controls.addEventListener("end", pauseRotate);
+      controls.addEventListener("change", updateLabelFade);
+      globe.onZoom(updateLabelFade);
+
+      // On touch screens let vertical swipes scroll the page; horizontal swipes rotate
+      if (window.matchMedia("(pointer: coarse)").matches) {
+        globe.renderer().domElement.style.touchAction = "pan-y";
+      }
+
+      applyMotion();
+      updateLabelFade();
+      motionQuery.addEventListener("change", function (e) {
+        reduced = e.matches;
+        applyMotion();
+      });
+
+      // Size to container
+      function resize() {
+        globe.width(globeEl.clientWidth).height(globeEl.clientHeight);
+      }
+      resize();
+      if ("ResizeObserver" in window) new ResizeObserver(resize).observe(globeEl);
+
+      // Pause rendering while off-screen
+      if ("IntersectionObserver" in window) {
+        new IntersectionObserver(function (records) {
+          if (records[0].isIntersecting) globe.resumeAnimation();
+          else globe.pauseAnimation();
+        }).observe(globeEl);
+      }
+
+      // Point click panel
+      function showPanel(placeId) {
+        var p = places[placeId];
+        panelTitle.textContent = p.name;
+        panelList.textContent = "";
+        JOURNEY.entries.forEach(function (entry) {
+          if (entry.place !== placeId) return;
+          var li = el("li");
+          li.appendChild(el("strong", "", entry.title));
+          li.appendChild(el("span", "", entry.dates));
+          panelList.appendChild(li);
+        });
+        panel.hidden = false;
+        pauseRotate();
+
+        var first = items.find(function (li) { return li.dataset.place === placeId; });
+        activate(placeId, first);
+        if (first) {
+          scrollLockUntil = Date.now() + 1200;
+          first.scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "nearest" });
+        }
+      }
+
+      function hidePanel() { panel.hidden = true; }
+      panel.querySelector(".journey-panel-close").addEventListener("click", hidePanel);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && !panel.hidden) hidePanel();
+      });
+    })();
+  </script>
 </body>
 </html>
