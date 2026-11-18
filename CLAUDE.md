@@ -26,5 +26,5 @@ Personal portfolio for an industrial engineer working in mining exploration and 
 
 ## Design
 - Palette: greens, greys, blacks and whites only. Classy and restrained.
-- All colours are CSS variables in :root in style.css. Never hard-code a colour.
+- All colours are CSS variables in :root in styles.css. Never hard-code a colour.
 - Green is an accent, not a background for large areas (except dark sections)
