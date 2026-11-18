@@ -23,3 +23,8 @@ Personal portfolio for an industrial engineer working in mining exploration and 
 
 ## Git
 - Never commit or push unless I ask
+
+## Design
+- Palette: greens, greys, blacks and whites only. Classy and restrained.
+- All colours are CSS variables in :root in styles.css. Never hard-code a colour.
+- Green is an accent, not a background for large areas (except dark sections)

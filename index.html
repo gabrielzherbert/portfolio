@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="site-header">
+  <header class="site-header on-dark">
     <nav class="nav container">
       <a class="nav-brand" href="#top">GH</a>
       <ul class="nav-links">
@@ -41,7 +41,8 @@
       </p>
     </section>
 
-    <section id="journey" class="section container journey">
+    <section id="journey" class="section section--dark on-dark journey">
+      <div class="container">
       <h2>Journey</h2>
       <div class="journey-layout">
         <div class="journey-globe-wrap">
@@ -54,6 +55,7 @@
           </div>
         </div>
         <ol id="journey-timeline" class="timeline"></ol>
+      </div>
       </div>
     </section>
 
@@ -97,9 +99,11 @@
     </section>
   </main>
 
-  <footer class="site-footer container">
-    <p>&copy; 2026 Gabi Herbert</p>
-    <a href="https://github.com/gabrielzherbert" target="_blank" rel="noopener">GitHub</a>
+  <footer class="site-footer on-dark">
+    <div class="site-footer-inner container">
+      <p>&copy; 2026 Gabi Herbert</p>
+      <a href="https://github.com/gabrielzherbert" target="_blank" rel="noopener">GitHub</a>
+    </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/globe.gl@2.46.1/dist/globe.gl.min.js"></script>
@@ -110,8 +114,27 @@
 
       var COUNTRIES_URL =
         "https://cdn.jsdelivr.net/gh/vasturiano/globe.gl@v2.46.1/example/datasets/ne_110m_admin_0_countries.geojson";
-      var NAVY = "#13294b";
-      var LIGHT = "#a9c7f0";
+      // Colours come from the CSS custom properties in :root (styles.css)
+      var rootStyle = getComputedStyle(document.documentElement);
+      var swatch = document.createElement("canvas").getContext("2d");
+      function cssColor(name, alpha) {
+        var value = rootStyle.getPropertyValue(name).trim();
+        if (alpha === undefined || !swatch) return value;
+        swatch.fillStyle = "#000";
+        swatch.fillStyle = value;
+        var hex = swatch.fillStyle;
+        if (hex.charAt(0) !== "#") return value;
+        var n = parseInt(hex.slice(1), 16);
+        return "rgba(" + (n >> 16) + "," + ((n >> 8) & 255) + "," + (n & 255) + "," + alpha + ")";
+      }
+      var C = {
+        background: cssColor("--globe-bg"),
+        sphere: cssColor("--globe-sphere"),
+        land: cssColor("--globe-land"),
+        point: cssColor("--globe-point"),
+        pointActive: cssColor("--globe-point-active")
+      };
+      function point(a) { return cssColor("--globe-point", a); }
       var VIEW_ALTITUDE = 1.9;
       var RESUME_DELAY = 5000;
 
@@ -218,9 +241,9 @@
       }
 
       globe
-        .backgroundColor("rgba(0,0,0,0)")
+        .backgroundColor(C.background)
         .showAtmosphere(true)
-        .atmosphereColor(LIGHT)
+        .atmosphereColor(C.point)
         .atmosphereAltitude(0.18)
         .pointOfView({ lat: 5, lng: 15, altitude: 2.4 }, 0)
         // Points
@@ -228,13 +251,13 @@
         .pointLng("lng")
         .pointAltitude(0.01)
         .pointRadius(function (p) { return p.id === activePlace ? 0.75 : 0.45; })
-        .pointColor(function (p) { return p.id === activePlace ? "#ffffff" : "rgba(255,255,255,0.75)"; })
+        .pointColor(function (p) { return p.id === activePlace ? C.pointActive : C.point; })
         .pointLabel(function (p) { return p.name; })
         .onPointClick(function (p) { showPanel(p.id); })
         // Glow rings
         .ringLat("lat")
         .ringLng("lng")
-        .ringColor(function () { return function (t) { return "rgba(169,199,240," + (1 - t) + ")"; }; })
+        .ringColor(function () { return function (t) { return point(Math.max(0, 0.6 * (1 - t))); }; })
         .ringMaxRadius(function (p) { return p.id === activePlace ? 4 : 2.2; })
         .ringPropagationSpeed(1.2)
         .ringRepeatPeriod(1600)
@@ -245,8 +268,8 @@
         .arcEndLng(function (a) { return places[a.to].lng; })
         .arcColor(function (a) {
           return a.type === "current"
-            ? ["rgba(169,199,240,0.35)", "rgba(169,199,240,0.55)"]
-            : ["rgba(169,199,240,0.95)", "rgba(255,255,255,0.95)"];
+            ? [point(0.3), point(0.5)]
+            : [point(0.9), cssColor("--globe-point-active", 0.9)];
         })
         .arcStroke(function (a) { return a.type === "current" ? 0.3 : 0.6; })
         .arcAltitudeAutoScale(0.4)
@@ -263,7 +286,7 @@
         })
         .htmlElementsData(JOURNEY.places);
 
-      globe.globeMaterial().color.set(NAVY);
+      globe.globeMaterial().color.set(C.sphere);
 
       // Fade labels out as their point nears the globe's edge
       function updateLabelFade() {
@@ -297,7 +320,7 @@
         });
       }
 
-      // Land as soft hex dots; plain navy sphere if this fails to load
+      // Land as soft hex dots; plain sphere if this fails to load
       fetch(COUNTRIES_URL)
         .then(function (r) { return r.json(); })
         .then(function (geo) {
@@ -306,7 +329,7 @@
             .hexPolygonResolution(3)
             .hexPolygonMargin(0.55)
             .hexPolygonUseDots(true)
-            .hexPolygonColor(function () { return "rgba(255,255,255,0.5)"; });
+            .hexPolygonColor(function () { return C.land; });
         })
         .catch(function () {});
 

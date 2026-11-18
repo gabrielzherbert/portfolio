@@ -1,27 +1,58 @@
 :root {
-  --bg: #ffffff;
-  --surface: #f5f7fa;
-  --text: #0f1f3d;
-  --muted: #4a5873;
-  --border: #dde3ec;
-  --accent: #13294b;
-  --accent-contrast: #ffffff;
-  --highlight: #13294b;
+  /* Palette */
+  --primary: #1F3D2B;
+  --accent: #4A7C59;
+  --accent-light: #8FB89A;
+  --dark: #121512;
+  --text: #1A1A1A;
+  --text-muted: #5F6360;
+  --border: #E2E4E1;
+  --bg: #F7F7F5;
+  --card: #FFFFFF;
+
+  /* Derived from the palette */
+  --on-dark: var(--bg);
+  --on-dark-muted: rgba(247, 247, 245, 0.72);
+  --border-dark: rgba(247, 247, 245, 0.14);
+  --surface-dark: rgba(247, 247, 245, 0.05);
+  --panel-dark: #1A1E1A;
+  --shadow: rgba(18, 21, 18, 0.35);
+  --shadow-strong: rgba(18, 21, 18, 0.85);
+
+  /* Roles (remapped inside .on-dark) */
+  --surface: var(--card);
+  --link: var(--primary);
+  --link-hover: var(--accent);
+  --highlight: var(--accent);
+  --button-bg: var(--primary);
+  --button-bg-hover: var(--dark);
+  --button-text: var(--on-dark);
+
+  /* Globe (read by the Journey script via getComputedStyle) */
+  --globe-bg: var(--dark);
+  --globe-sphere: var(--primary);
+  --globe-land: rgba(143, 184, 154, 0.28);
+  --globe-point: var(--accent-light);
+  --globe-point-active: var(--on-dark);
+  --globe-label: var(--on-dark-muted);
+  --globe-label-active: var(--on-dark);
+
   --radius: 10px;
   --max-width: 960px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0b1a33;
-    --surface: #11233f;
-    --text: #ffffff;
-    --muted: #b4c0d3;
-    --border: #1f3557;
-    --accent: #ffffff;
-    --accent-contrast: #0b1a33;
-    --highlight: #a9c7f0;
-  }
+/* Dark areas: header, footer and Journey */
+.on-dark {
+  --text: var(--on-dark);
+  --text-muted: var(--on-dark-muted);
+  --border: var(--border-dark);
+  --bg: var(--dark);
+  --surface: var(--surface-dark);
+  --link: var(--accent-light);
+  --link-hover: var(--on-dark);
+  --highlight: var(--accent-light);
+  background: var(--dark);
+  color: var(--text);
 }
 
 *,
@@ -44,7 +75,12 @@ body {
 }
 
 a {
-  color: var(--accent);
+  color: var(--link);
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--link-hover);
 }
 
 .container {
@@ -59,7 +95,6 @@ a {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: var(--bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -85,7 +120,7 @@ a {
 }
 
 .nav-links a {
-  color: var(--muted);
+  color: var(--text-muted);
   text-decoration: none;
   font-size: 0.95rem;
 }
@@ -118,7 +153,7 @@ a {
 .hero-lede {
   max-width: 34rem;
   margin: 16px 0 28px;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 1.1rem;
 }
 
@@ -126,14 +161,17 @@ a {
   display: inline-block;
   padding: 10px 20px;
   border-radius: var(--radius);
-  background: var(--accent);
-  color: var(--accent-contrast);
+  background: var(--button-bg);
+  color: var(--button-text);
   font-weight: 600;
   text-decoration: none;
+  transition: background-color 0.2s;
 }
 
-.button:hover {
-  opacity: 0.9;
+.button:hover,
+.button:focus-visible {
+  background: var(--button-bg-hover);
+  color: var(--button-text);
 }
 
 /* Sections */
@@ -144,6 +182,11 @@ a {
   scroll-margin-top: 56px;
 }
 
+.section--dark,
+.section--dark + .section {
+  border-top: 0;
+}
+
 .section h2 {
   margin: 0 0 20px;
   font-size: 1.6rem;
@@ -151,7 +194,7 @@ a {
 
 .section p {
   max-width: 40rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Project cards */
@@ -163,9 +206,14 @@ a {
 
 .card {
   padding: 24px;
-  background: var(--surface);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  transition: border-color 0.2s;
+}
+
+.card:hover {
+  border-color: var(--accent-light);
 }
 
 .card h3 {
@@ -191,7 +239,7 @@ a {
   border: 1px solid var(--border);
   border-radius: 999px;
   font-size: 0.8rem;
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 /* Journey */
@@ -232,11 +280,11 @@ a {
   display: block;
   transition: opacity 0.2s;
   transform: translate(calc(50% + 10px), 0);
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--globe-label);
   font-size: 0.75rem;
   font-weight: 600;
   white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 1px 3px var(--shadow-strong);
 }
 
 .globe-label--left .globe-label-text {
@@ -244,7 +292,7 @@ a {
 }
 
 .globe-label.is-active .globe-label-text {
-  color: #ffffff;
+  color: var(--globe-label-active);
   font-size: 0.85rem;
 }
 
@@ -262,10 +310,10 @@ a {
   bottom: 8px;
   max-width: min(280px, calc(100% - 16px));
   padding: 12px 36px 12px 14px;
-  background: var(--surface);
+  background: var(--panel-dark);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  box-shadow: 0 6px 20px rgba(15, 31, 61, 0.15);
+  box-shadow: 0 6px 20px var(--shadow);
   font-size: 0.85rem;
 }
 
@@ -291,7 +339,7 @@ a {
 }
 
 .journey-panel-list span {
-  color: var(--muted);
+  color: var(--text-muted);
 }
 
 .journey-panel-close {
@@ -301,7 +349,7 @@ a {
   padding: 2px 8px;
   border: 0;
   background: none;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 1.2rem;
   line-height: 1;
   cursor: pointer;
@@ -353,6 +401,10 @@ a {
   border-color: var(--highlight);
 }
 
+.timeline-item:hover {
+  border-color: var(--border);
+}
+
 .timeline-item.is-active {
   background: var(--surface);
   border-color: var(--border);
@@ -402,7 +454,7 @@ a {
 .timeline-details {
   margin: 6px 0 0;
   padding-left: 18px;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
@@ -445,7 +497,7 @@ a {
 }
 
 /* Footer */
-.site-footer {
+.site-footer-inner {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -453,8 +505,7 @@ a {
   gap: 8px 24px;
   padding-top: 24px;
   padding-bottom: 40px;
-  border-top: 1px solid var(--border);
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: 0.9rem;
 }
 
